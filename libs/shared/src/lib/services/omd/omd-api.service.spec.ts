@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OmdApiService } from './omd-api.service';
+import { OmdApiService } from 'libs/shared/src/lib/services/omd/omd-api.service';
 
 describe('OmdApiService', () => {
   let service: OmdApiService;

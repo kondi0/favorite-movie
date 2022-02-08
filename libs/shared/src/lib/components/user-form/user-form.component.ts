@@ -2,6 +2,11 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { User } from '@favorite-movie/shared';
 import { Countries } from '../../models/user-form/countries.enum';
+import {
+  ukPostCodePattern,
+  userNamePattern,
+} from 'libs/shared/src/lib/constants/form-patterns';
+import { ErrorMessagesService } from 'libs/shared/src/lib/services/error-messages/error-messages.service';
 
 @Component({
   selector: 'user-form',
@@ -17,19 +22,19 @@ export class UserFormComponent implements OnInit {
 
   userForm = this.formBuilder.group(
     {
-      name: [
-        '',
-        [Validators.required, Validators.pattern('^[A-Za-zñÑáéíóúÁÉÍÓÚ ]+$')],
-      ],
+      name: ['', [Validators.required, Validators.pattern(userNamePattern)]],
       username: ['', Validators.email],
       country: ['', Validators.required],
-      postCode: [''],
+      postCode: [null],
       favoriteMovie: [''],
     },
     { updateOn: 'submit' }
   );
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private errorMessagesService: ErrorMessagesService
+  ) {}
 
   private readonly irishPostCodeValidators = [
     Validators.minLength(6),
@@ -38,12 +43,24 @@ export class UserFormComponent implements OnInit {
 
   private readonly ukPostCodeValidators = [
     Validators.required,
-    Validators.pattern(
-      '^[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]? [0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$'
-    ),
+    Validators.pattern(ukPostCodePattern),
   ];
 
   ngOnInit(): void {
+    this.keepPostCodeValidatorsUpdated();
+  }
+
+  save() {
+    if (this.userForm.valid) {
+      this.newUser.emit(this.userForm.getRawValue() as User);
+    }
+  }
+
+  getErrorMessage(errors) {
+    return this.errorMessagesService.getErrorMessage(errors);
+  }
+
+  private keepPostCodeValidatorsUpdated() {
     this.userForm.controls['country'].valueChanges.subscribe(
       (country: Countries) => {
         this.userForm.controls['postCode'].setValidators(
@@ -54,16 +71,5 @@ export class UserFormComponent implements OnInit {
         this.userForm.controls['postCode'].updateValueAndValidity();
       }
     );
-  }
-
-  save() {
-    if (this.userForm.valid) {
-      this.newUser.emit(this.userForm.getRawValue() as User);
-    }
-  }
-
-  gePostalCodeMessageError() {
-    // @ts-ignore
-    return JSON.stringify(this.userForm.get('postCode').errors);
   }
 }
