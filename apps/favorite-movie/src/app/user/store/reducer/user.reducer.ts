@@ -9,7 +9,13 @@ export interface UserState {
 }
 
 export const initialState: UserState = {
-  user: { name: '', country: '' },
+  user: {
+    name: '',
+    country: '',
+    username: '',
+    postCode: '',
+    favoriteMovie: '',
+  },
 };
 
 export const userReducer = createReducer(
