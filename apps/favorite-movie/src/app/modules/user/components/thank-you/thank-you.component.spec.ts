@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AddUserComponent } from 'apps/favorite-movie/src/app/user/components/add-user/add-user.component';
-import { provideMockStore } from '@ngrx/store/testing';
-import { HttpClientModule } from '@angular/common/http';
+
+import { ThankYouComponent } from 'apps/favorite-movie/src/app/modules/user/components/thank-you/thank-you.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
-describe('AddUserComponent', () => {
-  let component: AddUserComponent;
-  let fixture: ComponentFixture<AddUserComponent>;
+describe('ThankYouComponent', () => {
+  let component: ThankYouComponent;
+  let fixture: ComponentFixture<ThankYouComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddUserComponent],
+      declarations: [ThankYouComponent],
       imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [provideMockStore({})],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddUserComponent);
+    fixture = TestBed.createComponent(ThankYouComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

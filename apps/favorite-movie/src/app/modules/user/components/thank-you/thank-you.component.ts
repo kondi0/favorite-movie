@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { UserState } from 'apps/favorite-movie/src/app/user/store/reducer/user.reducer';
+import { UserState } from 'apps/favorite-movie/src/app/modules/user/store/reducer/user.reducer';
 import { User } from '@favorite-movie/shared';
-import { selectUser } from 'apps/favorite-movie/src/app/user/store/selector/user.selectors';
+import { selectUser } from 'apps/favorite-movie/src/app/modules/user/store/selector/user.selectors';
 import { take, takeUntil } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 

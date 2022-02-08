@@ -1,4 +1,4 @@
-import * as fromUser from './user.actions';
+import * as fromUser from 'apps/favorite-movie/src/app/modules/user/store/action/user.actions';
 
 describe('loadUsers', () => {
   it('should return an action', () => {

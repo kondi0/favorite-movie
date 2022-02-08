@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import * as UserActions from '../action/user.actions';
+import * as UserActions from 'apps/favorite-movie/src/app/modules/user/store/action/user.actions';
 import { User } from '@favorite-movie/shared';
 
 export const userFeatureKey = 'user';
