@@ -1,0 +1,43 @@
+<h1>Add New User</h1>
+<form [formGroup]="userForm">
+  <div class="user-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your name</mat-label>
+      <input matInput placeholder="Name" formControlName="name" required />
+      <mat-error *ngIf="userForm.get('name')?.errors?.pattern"
+        >Numbers are not allowed</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter Username</mat-label>
+      <input
+        matInput
+        placeholder="hey@example.com"
+        formControlName="username"
+      />
+      <mat-error *ngIf="userForm.get('username')?.errors?.email"
+        >Not a valid email</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Select the country</mat-label>
+      <mat-select required formControlName="country">
+        <mat-option
+          *ngFor="let food of ['Ireland', 'United Kingdom']"
+          [value]="food"
+        >
+          {{ food }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter the postal code</mat-label>
+      <input matInput placeholder="Postal code" formControlName="postCode" />
+      <mat-error *ngIf="userForm.get('postCode')?.invalid">{{
+        gePostalCodeMessageError()
+      }}</mat-error>
+    </mat-form-field>
+    <movies-filter formControlName="favoriteMovie"></movies-filter>
+    {{ userForm.getRawValue() | json }}
+  </div>
+</form>
