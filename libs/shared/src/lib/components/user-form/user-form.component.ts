@@ -14,12 +14,21 @@ import { ErrorMessagesService } from 'libs/shared/src/lib/services/error-message
   styleUrls: ['./user-form.component.scss'],
 })
 export class UserFormComponent implements OnInit {
+  private readonly irishPostCodeValidators = [
+    Validators.minLength(6),
+    Validators.maxLength(10),
+  ];
+
+  private readonly ukPostCodeValidators = [
+    Validators.required,
+    Validators.pattern(ukPostCodePattern),
+  ];
+
   @Output()
   newUser: EventEmitter<User> = new EventEmitter<User>();
 
   countries: typeof Countries = Countries;
   countriesList: string[] = Object.keys(this.countries);
-
   userForm = this.formBuilder.group(
     {
       name: ['', [Validators.required, Validators.pattern(userNamePattern)]],
@@ -36,31 +45,21 @@ export class UserFormComponent implements OnInit {
     private errorMessagesService: ErrorMessagesService
   ) {}
 
-  private readonly irishPostCodeValidators = [
-    Validators.minLength(6),
-    Validators.maxLength(10),
-  ];
-
-  private readonly ukPostCodeValidators = [
-    Validators.required,
-    Validators.pattern(ukPostCodePattern),
-  ];
-
   ngOnInit(): void {
     this.keepPostCodeValidatorsUpdated();
   }
 
-  save() {
+  save(): void {
     if (this.userForm.valid) {
       this.newUser.emit(this.userForm.getRawValue() as User);
     }
   }
 
-  getErrorMessage(errors) {
+  getErrorMessage(errors): string {
     return this.errorMessagesService.getErrorMessage(errors);
   }
 
-  private keepPostCodeValidatorsUpdated() {
+  private keepPostCodeValidatorsUpdated(): void {
     this.userForm.controls['country'].valueChanges.subscribe(
       (country: Countries) => {
         this.userForm.controls['postCode'].setValidators(
