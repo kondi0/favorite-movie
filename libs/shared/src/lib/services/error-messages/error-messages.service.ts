@@ -19,7 +19,7 @@ export class ErrorMessagesService {
       (errors) => {
         // Patterns control can be improved if in the future there are more patterns
         return errors.pattern.requiredPattern === ukPostCodePattern
-          ? 'Ivalid post code for the UK'
+          ? 'Invalid post code for the UK'
           : 'The name can not contain numbers';
       },
     ],
@@ -27,8 +27,8 @@ export class ErrorMessagesService {
 
   constructor() {}
 
-  getErrorMessage(errors) {
+  getErrorMessage(errors): string {
     const errorMessage = this.errorsMap.get(Object.keys(errors)[0]);
-    return errorMessage ? errorMessage(errors) : ['Invalid field'];
+    return errorMessage ? errorMessage(errors) : 'Invalid field';
   }
 }
