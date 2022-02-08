@@ -3,3 +3,8 @@
   flex-direction: column;
   flex-wrap: nowrap;
 }
+
+.submit-button {
+  display: flex;
+  justify-content: flex-end;
+}

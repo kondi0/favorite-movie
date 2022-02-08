@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { OmdApiService } from '../../services/omd-api.service';
+import { map } from 'rxjs/operators';
+import { OmdapiMovieInterface } from '../../models/omdapi-movie-interface';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'movies-filter',
@@ -15,14 +19,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class MoviesFilterComponent implements OnInit, ControlValueAccessor {
   selectedMovie = '';
+  suggestions: Observable<OmdapiMovieInterface[]> = of([]);
 
-  onChange = (movie: unknown) => {
-    debugger;
-  };
+  onChange = (movie: string) => {};
 
   onTouched = () => {};
 
-  constructor() {}
+  constructor(private apiService: OmdApiService) {}
 
   ngOnInit(): void {}
 
@@ -38,7 +41,10 @@ export class MoviesFilterComponent implements OnInit, ControlValueAccessor {
     this.onTouched = onTouched;
   }
 
-  hey(event: unknown) {
-    this.onChange(event);
+  search(term: string) {
+    this.onChange(term);
+    this.suggestions = this.apiService
+      .getMovies(term)
+      .pipe(map((result) => result.Search));
   }
 }

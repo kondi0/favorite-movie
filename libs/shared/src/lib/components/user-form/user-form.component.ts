@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { User } from '@favorite-movie/shared';
 
 @Component({
   selector: 'user-form',
@@ -9,6 +8,9 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./user-form.component.scss'],
 })
 export class UserFormComponent implements OnInit {
+  @Output()
+  newUser: EventEmitter<User> = new EventEmitter<User>();
+
   userForm = this.formBuilder.group({
     name: [
       '',
@@ -41,11 +43,8 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  addCustomer(value: string) {
-    // this.store.dispatch(addUser({ name: value }));
-    // this.store.pipe(select(selectUser), take(1)).subscribe((value1) => {
-    //   console.log(value1);
-    // });
+  save() {
+    this.newUser.emit(this.userForm.getRawValue() as User);
   }
 
   gePostalCodeMessageError() {

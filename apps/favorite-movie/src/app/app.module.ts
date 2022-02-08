@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,8 +18,18 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'omdapiUrl',
+      useValue: environment.omdapi,
+    },
+    {
+      provide: 'omdapiUrl_apikey',
+      useValue: environment.omdapi_apikey,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

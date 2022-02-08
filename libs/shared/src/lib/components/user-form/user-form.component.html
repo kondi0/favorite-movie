@@ -1,5 +1,5 @@
 <h1>Add New User</h1>
-<form [formGroup]="userForm">
+<form [formGroup]="userForm" (ngSubmit)="save()">
   <div class="user-form">
     <mat-form-field appearance="fill">
       <mat-label>Enter your name</mat-label>
@@ -39,5 +39,8 @@
     </mat-form-field>
     <movies-filter formControlName="favoriteMovie"></movies-filter>
     {{ userForm.getRawValue() | json }}
+  </div>
+  <div class="submit-button">
+    <button mat-raised-button color="primary">Save</button>
   </div>
 </form>

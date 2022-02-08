@@ -4,8 +4,6 @@
 
 export const environment = {
   production: false,
-  omdapi: 'https://www.omdbapi.com/',
-  omdapi_apikey: '83513884',
 };
 
 /*

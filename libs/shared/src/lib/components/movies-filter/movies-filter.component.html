@@ -1,18 +1,18 @@
 <mat-form-field class="fav-movie-autocomplete">
   <input
     type="text"
-    placeholder="Search your favorite movie"
+    placeholder="Your favorite movie"
     matInput
     [matAutocomplete]="auto"
-    (ngModelChange)="hey($event)"
+    (ngModelChange)="search($event)"
     [(ngModel)]="selectedMovie"
   />
   <mat-autocomplete #auto="matAutocomplete">
-    <!--    <mat-option-->
-    <!--      *ngFor="let option of filteredOptions | async"-->
-    <!--      [value]="option.name"-->
-    <!--    >-->
-    <!--      {{ option.name }}-->
-    <!--    </mat-option>-->
+    <mat-option
+      *ngFor="let suggestion of suggestions | async"
+      [value]="suggestion.Title"
+    >
+      {{ suggestion.Title }}, Year: {{ suggestion.Year }}
+    </mat-option>
   </mat-autocomplete>
 </mat-form-field>

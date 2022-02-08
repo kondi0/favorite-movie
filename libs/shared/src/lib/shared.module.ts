@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MoviesFilterComponent } from './components/movies-filter/movies-filter.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatSelectModule,
     MatAutocompleteModule,
     FormsModule,
+    MatButtonModule,
   ],
   declarations: [UserFormComponent, MoviesFilterComponent],
   exports: [UserFormComponent, MoviesFilterComponent],
