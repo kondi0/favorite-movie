@@ -4,7 +4,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Enter your name</mat-label>
       <input matInput placeholder="Name" formControlName="name" required />
-      <mat-error *ngIf="userForm.get('name')?.errors?.pattern">
+      <mat-error *ngIf="userForm.get('name')?.invalid">
         {{ getErrorMessage(userForm.get('name')?.errors) }}
       </mat-error>
     </mat-form-field>
@@ -15,7 +15,7 @@
         placeholder="hey@example.com"
         formControlName="username"
       />
-      <mat-error *ngIf="userForm.get('username')?.errors?.email">
+      <mat-error *ngIf="userForm.get('username')?.invalid">
         {{ getErrorMessage(userForm.get('username')?.errors) }}
       </mat-error>
     </mat-form-field>
