@@ -23,10 +23,10 @@
       <mat-label>Select the country</mat-label>
       <mat-select required formControlName="country">
         <mat-option
-          *ngFor="let food of ['Ireland', 'United Kingdom']"
-          [value]="food"
+          *ngFor="let country of countriesList"
+          [value]="countries[country]"
         >
-          {{ food }}
+          {{ countries[country] }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -38,7 +38,6 @@
       }}</mat-error>
     </mat-form-field>
     <movies-filter formControlName="favoriteMovie"></movies-filter>
-    {{ userForm.getRawValue() | json }}
   </div>
   <div class="submit-button">
     <button mat-raised-button color="primary">Save</button>
