@@ -1,4 +1,4 @@
-import { OmdapiMovieInterface } from 'libs/shared/src/lib/models/omdapi-movie-interface';
+import { OmdapiMovieInterface } from './omdapi-movie-interface';
 
 export interface OmdapiResponseInterface {
   Response: boolean;

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { OmdapiResponseInterface } from '../models/omdapi-response.interface';
+import { OmdapiResponseInterface } from 'libs/shared/src/lib/models/omdapi/omdapi-response.interface';
 
 @Injectable({
   providedIn: 'root',

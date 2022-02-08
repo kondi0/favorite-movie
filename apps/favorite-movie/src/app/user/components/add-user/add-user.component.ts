@@ -14,7 +14,7 @@ import { User } from '@favorite-movie/shared';
 export class AddUserComponent {
   constructor(private store: Store<UserState>) {}
 
-  addCustomer(value: User) {
+  addUser(value: User) {
     this.store.dispatch(addUser(value));
     this.store.pipe(select(selectUser), take(1)).subscribe((value1) => {
       console.log(value1);

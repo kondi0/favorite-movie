@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { OmdApiService } from '../../services/omd-api.service';
 import { map } from 'rxjs/operators';
-import { OmdapiMovieInterface } from '../../models/omdapi-movie-interface';
+import { OmdapiMovieInterface } from 'libs/shared/src/lib/models/omdapi/omdapi-movie-interface';
 import { Observable, of } from 'rxjs';
 
 @Component({
