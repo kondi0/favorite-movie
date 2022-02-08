@@ -5,11 +5,11 @@ import { User } from '@favorite-movie/shared';
 export const userFeatureKey = 'user';
 
 export interface UserState {
-  user: User | undefined;
+  user: User;
 }
 
 export const initialState: UserState = {
-  user: undefined,
+  user: { name: '', country: '' },
 };
 
 export const userReducer = createReducer(

@@ -11,14 +11,16 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { reducer, userFeatureKey } from './store/reducer/user.reducer';
 import { SharedModule } from '@favorite-movie/shared';
+import { ThankYouComponent } from './components/thank-you/thank-you.component';
 
 const userRoutes: Routes = [
   { path: '', redirectTo: 'enter' },
   { path: 'enter', component: AddUserComponent },
+  { path: 'thankyou', component: ThankYouComponent },
 ];
 
 @NgModule({
-  declarations: [AddUserComponent],
+  declarations: [AddUserComponent, ThankYouComponent],
   imports: [
     CommonModule,
     StoreModule.forFeature(userFeatureKey, reducer),
