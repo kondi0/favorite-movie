@@ -17,7 +17,7 @@ import { Observable, of } from 'rxjs';
     },
   ],
 })
-export class MoviesFilterComponent implements OnInit, ControlValueAccessor {
+export class MoviesFilterComponent implements ControlValueAccessor {
   selectedMovie = '';
   suggestions: Observable<OmdapiMovieInterface[]> = of([]);
 
@@ -26,8 +26,6 @@ export class MoviesFilterComponent implements OnInit, ControlValueAccessor {
   onTouched = () => {};
 
   constructor(private apiService: OmdApiService) {}
-
-  ngOnInit(): void {}
 
   writeValue(movie: string) {
     this.selectedMovie = movie;
