@@ -20,6 +20,8 @@ describe('ThankYouComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ThankYouComponent);
     component = fixture.componentInstance;
+    component.user = { name: 'name', username: 'username' } as any;
+
     fixture.detectChanges();
   });
 
