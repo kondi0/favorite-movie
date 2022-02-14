@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { OmdApiService } from '@favorite-movie/shared';
+import { OmdApiService, User } from '@favorite-movie/shared';
 import { addUser, updateUserInTheStore } from '../action/user.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -21,8 +21,10 @@ export class UserEffects {
     )
   );
 
-  private hasImdbID(user) {
-    return user.favoriteMovie && user.favoriteMovie.imdbID;
+  constructor(private actions$: Actions, private omdService: OmdApiService) {}
+
+  private hasImdbID({ favoriteMovie }: User): boolean {
+    return (favoriteMovie && !!favoriteMovie.imdbID) || false;
   }
 
   private fillMovieDetails(user): Actions {
@@ -42,20 +44,19 @@ export class UserEffects {
   }
 
   private getActors(Actors: string): string {
-    return (
-      Actors &&
-      Actors.split(',')
-        .map((item: string) => item.trim())
-        .sort((first: string, second: string) =>
-          this.getActorsName(first).localeCompare(this.getActorsName(second))
-        )
-        .join()
-    );
+    return Actors && this.orderActorsByFirstName(Actors);
   }
 
-  getActorsName(actor: string): string {
+  private orderActorsByFirstName(Actors: string): string {
+    return Actors.split(',')
+      .map((item: string) => item.trim())
+      .sort((first: string, second: string) =>
+        this.getActorsName(first).localeCompare(this.getActorsName(second))
+      )
+      .join();
+  }
+
+  private getActorsName(actor: string): string {
     return actor.split(' ')[0];
   }
-
-  constructor(private actions$: Actions, private omdService: OmdApiService) {}
 }
