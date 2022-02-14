@@ -1,12 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { User } from '@favorite-movie/shared';
 import { Countries } from '../../models/user-form/countries.enum';
 import {
   ukPostCodePattern,
   userNamePattern,
 } from 'libs/shared/src/lib/constants/form-patterns';
 import { ErrorMessagesService } from 'libs/shared/src/lib/services/error-messages/error-messages.service';
+import { User } from 'libs/shared/src/lib/models/user-form/user.interface';
 
 @Component({
   selector: 'user-form',
@@ -51,7 +51,8 @@ export class UserFormComponent implements OnInit {
 
   save(): void {
     if (this.userForm.valid) {
-      this.newUser.emit(this.userForm.getRawValue() as User);
+      const { favoriteMovie, ...rest } = this.userForm.getRawValue();
+      this.newUser.emit({ ...rest, favoriteMovie: { imdbID: favoriteMovie } });
     }
   }
 

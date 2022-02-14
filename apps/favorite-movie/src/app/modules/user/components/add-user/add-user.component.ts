@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 export class AddUserComponent {
   constructor(private store: Store<UserState>, private router: Router) {}
 
-  addUser(value: User): void {
-    this.store.dispatch(addUser(value));
+  addUser(user: User): void {
+    this.store.dispatch(addUser(user));
     this.router.navigateByUrl('/user/thankyou');
   }
 }

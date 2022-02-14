@@ -12,13 +12,7 @@ import { Observable, of, Subject } from 'rxjs';
   styleUrls: ['./thank-you.component.scss'],
 })
 export class ThankYouComponent implements OnInit, OnDestroy {
-  user: User = {
-    name: '',
-    country: '',
-    username: '',
-    postCode: '',
-    favoriteMovie: '',
-  };
+  user: User;
 
   objectKeys = Object.keys;
   destroyed: Subject<void> = new Subject<void>();
@@ -27,7 +21,7 @@ export class ThankYouComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store
-      .pipe(select(selectUser), take(1), takeUntil(this.destroyed))
+      .pipe(select(selectUser), takeUntil(this.destroyed))
       .subscribe((user: User) => {
         this.user = user;
       });
@@ -36,5 +30,9 @@ export class ThankYouComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed.next();
     this.destroyed.complete();
+  }
+
+  isObject(property: string | object): boolean {
+    return property != null && typeof property === 'object';
   }
 }

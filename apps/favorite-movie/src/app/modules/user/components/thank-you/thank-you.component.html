@@ -1,5 +1,31 @@
-<mat-card
-  ><div *ngFor="let property of objectKeys(user)" class="property-line">
-    <span>{{ property | uppercase }}: </span>{{ user[property] }}
-  </div></mat-card
->
+<mat-card>
+  <ng-container
+    *ngTemplateOutlet="objectIterate; context: { object: user }"
+  ></ng-container
+></mat-card>
+
+<ng-template #objectIterate let-object="object">
+  <div
+    [class.property-line]="!isObject(object[property])"
+    *ngFor="let property of objectKeys(object)"
+  >
+    <ng-container *ngIf="isObject(object[property])">
+      <span class="object-property-title">{{ property | uppercase }} </span>
+      <ng-container
+        *ngTemplateOutlet="objectIterate; context: { object: object[property] }"
+      ></ng-container>
+    </ng-container>
+    <ng-container *ngIf="!isObject(object[property]) && object[property]">
+      <ng-container
+        *ngTemplateOutlet="
+          properties;
+          context: { property: property, object: object }
+        "
+      ></ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #properties let-property="property" let-object="object">
+  <span>{{ property | uppercase }}: </span>{{ object[property] }}
+</ng-template>

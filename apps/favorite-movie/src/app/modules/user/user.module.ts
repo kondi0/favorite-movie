@@ -10,6 +10,8 @@ import {
 import { SharedModule } from '@favorite-movie/shared';
 import { ThankYouComponent } from 'apps/favorite-movie/src/app/modules/user/components/thank-you/thank-you.component';
 import { MatCardModule } from '@angular/material/card';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from 'apps/favorite-movie/src/app/modules/user/store/effect/user.effects';
 
 const userRoutes: Routes = [
   {
@@ -32,6 +34,7 @@ const userRoutes: Routes = [
     RouterModule.forChild(userRoutes),
     CommonModule,
     StoreModule.forFeature(userFeatureKey, reducer),
+    EffectsModule.forFeature([UserEffects]),
     SharedModule,
     MatCardModule,
   ],

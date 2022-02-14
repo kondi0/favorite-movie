@@ -1,7 +1,8 @@
 export interface OmdapiMovieInterface {
-  Title: string;
-  Year: string;
-  Poster: string;
-  Type: string;
-  imdbId: string;
+  imdbID: string;
+  Title?: string;
+  Year?: string;
+  Poster?: string;
+  Type?: string;
+  Actors?: string;
 }

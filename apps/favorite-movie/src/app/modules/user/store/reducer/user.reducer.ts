@@ -14,13 +14,13 @@ export const initialState: UserState = {
     country: '',
     username: '',
     postCode: '',
-    favoriteMovie: '',
+    favoriteMovie: { imdbID: '' },
   },
 };
 
 export const userReducer = createReducer(
   initialState,
-  on(UserActions.addUser, (state: UserState, { user }) => ({
+  on(UserActions.updateUserInTheStore, (state: UserState, { user }) => ({
     ...state,
     user: { ...user },
   }))

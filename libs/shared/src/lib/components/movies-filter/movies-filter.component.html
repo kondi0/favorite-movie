@@ -4,13 +4,13 @@
     placeholder="Your favorite movie"
     matInput
     [matAutocomplete]="auto"
-    (ngModelChange)="search($event)"
-    [(ngModel)]="selectedMovie"
+    [formControl]="movieAutocomplete"
   />
-  <mat-autocomplete #auto="matAutocomplete">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayTitle">
     <mat-option
       *ngFor="let suggestion of suggestions | async"
-      [value]="suggestion.Title"
+      [value]="suggestion"
+      (onSelectionChange)="select($event.source.value)"
     >
       {{ suggestion.Title }}, Year: {{ suggestion.Year }}
     </mat-option>

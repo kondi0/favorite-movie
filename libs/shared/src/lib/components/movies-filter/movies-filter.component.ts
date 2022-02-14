@@ -1,7 +1,16 @@
-import { Component } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { OmdApiService } from 'libs/shared/src/lib/services/omd/omd-api.service';
-import { map } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  switchMap,
+} from 'rxjs/operators';
 import { OmdapiMovieInterface } from 'libs/shared/src/lib/models/omdapi/omdapi-movie-interface';
 import { Observable, of } from 'rxjs';
 import { OmdapiResponseInterface } from 'libs/shared/src/lib/models/omdapi/omdapi-response.interface';
@@ -18,18 +27,31 @@ import { OmdapiResponseInterface } from 'libs/shared/src/lib/models/omdapi/omdap
     },
   ],
 })
-export class MoviesFilterComponent implements ControlValueAccessor {
-  selectedMovie = '';
+export class MoviesFilterComponent implements ControlValueAccessor, OnInit {
+  private readonly _dueTime = 100;
+  movieAutocomplete: FormControl = new FormControl();
   suggestions: Observable<OmdapiMovieInterface[]> = of([]);
+
+  constructor(private apiService: OmdApiService) {}
+
+  ngOnInit(): void {
+    this.suggestions = this.movieAutocomplete.valueChanges.pipe(
+      debounceTime(this._dueTime),
+      distinctUntilChanged(),
+      switchMap((term: string) =>
+        this.apiService
+          .searchMoviesByTerm(term)
+          .pipe(map(({ Search }: OmdapiResponseInterface) => Search))
+      )
+    );
+  }
 
   onChange = (movie: string) => {};
 
   onTouched = () => {};
 
-  constructor(private apiService: OmdApiService) {}
-
   writeValue(movie: string): void {
-    this.selectedMovie = movie;
+    this.searchForSelectedMovie(movie);
   }
 
   registerOnChange(onChange: any): void {
@@ -40,10 +62,21 @@ export class MoviesFilterComponent implements ControlValueAccessor {
     this.onTouched = onTouched;
   }
 
-  search(term: string): void {
-    this.onChange(term);
-    this.suggestions = this.apiService
-      .getMovies(term)
-      .pipe(map(({ Search }: OmdapiResponseInterface) => Search));
+  displayTitle(movie: OmdapiMovieInterface) {
+    return (movie && movie.Title) || '';
+  }
+
+  select(movie: OmdapiMovieInterface) {
+    this.onChange(movie.imdbID);
+  }
+
+  private searchForSelectedMovie(movie: string) {
+    if (movie) {
+      this.apiService
+        .getMovieById(movie)
+        .subscribe((selectedMovie: OmdapiMovieInterface) => {
+          this.movieAutocomplete.setValue(selectedMovie);
+        });
+    }
   }
 }
